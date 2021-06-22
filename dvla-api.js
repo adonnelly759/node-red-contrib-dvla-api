@@ -40,17 +40,7 @@ module.exports = function(RED) {
             .then((values) => {
                 let cars = []
                 for(const value of values){
-                    cars.push({
-                        "make": value.make,
-                        "registrationNumber": convertPlate(value.registrationNumber),
-                        "motStatus": (value.motStatus) == "Valid" ? true : false,
-                        "motDue": value.motExpiryDate,
-                        "year": value.yearOfManufacture,
-                        "motDaysTo": value.motExpiryDate,
-                        "taxStatus": (value.taxStatus) == "Taxed" ? true : false,
-                        "taxDue": value.taxDueDate,
-                        "taxDaysTo": value.taxDueDate,
-                    })
+                    cars.push(value)
                 }
                 msg.payload = cars
                 node.send(msg);

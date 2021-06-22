@@ -1,6 +1,6 @@
 {
     "name" : "node-red-contrib-dvla-api",
-    "version" : "0.0.1",
+    "version" : "0.0.3",
     "description": "Node-Red module that allows you to interact with the DVLA API",
     "dependencies": {
         "axios": "^0.21.1"
@@ -10,7 +10,8 @@
         "dvla-api",
         "number-plates",
         "number plates",
-        "uk"
+        "uk",
+        "node-red"
     ],
     "node-red" : {
         "nodes": {
