@@ -1,6 +1,6 @@
 {
     "name" : "node-red-contrib-dvla-api",
-    "version" : "0.0.3",
+    "version" : "1.0.0",
     "description": "Node-Red module that allows you to interact with the DVLA API",
     "dependencies": {
         "axios": "^0.21.1"
