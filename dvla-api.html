@@ -1,0 +1,29 @@
+<script type="text/javascript">
+    RED.nodes.registerType('dvla-api',{
+        category: 'DVLA',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        label: function() {
+            return this.name||"dvla-api";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="dvla-api">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="dvla-api">
+    <p>A simple node that returns DVLA information on registrations</p>
+    <p>msg.payload can take a single registration plate.</p>
+    <p>msg.payload can take multiple registration plates separated by a comma.</p>
+    <p>msg.key must be a string which contains your DVLA API Key (which can be got from <a href="https://developer-portal.driver-vehicle-licensing.api.gov.uk/apis/vehicle-enquiry-service/vehicle-enquiry-service-description.html#register-for-ves-api">here</a>).</p>
+</script>

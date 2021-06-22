@@ -1,0 +1,22 @@
+{
+    "name" : "node-red-contrib-example-dvla-api",
+    "version" : "0.0.1",
+    "description": "Node-Red module that allows you to interact with the DVLA API",
+    "dependencies": {
+        "axios": "^0.21.1"
+    },
+    "keywords": [
+        "dvla",
+        "dvla-api",
+        "number-plates",
+        "number plates",
+        "uk"
+    ],
+    "node-red" : {
+        "nodes": {
+            "dvla-api": "dvla-api.js"
+        }
+    },
+    "author": "Aidan Donnelly",
+    "license": "MIT"
+}
