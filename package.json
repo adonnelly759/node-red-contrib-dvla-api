@@ -18,5 +18,13 @@
         }
     },
     "author": "Aidan Donnelly",
-    "license": "MIT"
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/adonnelly759/node-red-contrib-example-dvla-api.git"
+    },
+    "bugs": {
+        "url": "https://github.com/adonnelly759/node-red-contrib-example-dvla-api/issues"
+    },
+    "homepage": "https://github.com/adonnelly759/node-red-contrib-example-dvla-api#readme"
 }
