@@ -1,0 +1,49 @@
+extends Base.pug 
+block content 
+  .row.m-0.pt-2.pb-4
+    .col-12
+      h6.text-muted.text-center
+        | Key
+    .col-lg-3.col-sm-6.pb-2
+      button.btn.btn-success.btn-block
+        | > 60 Days Of MOT
+    .col-lg-3.col-sm-6.pb-2
+      button.btn.btn-warning.btn-block
+        | < 60 Days Of MOT
+    .col-lg-3.col-sm-6.pb-2
+      button.btn.btn-danger.btn-block
+        | < 30 Days of MOT
+    .col-lg-3.col-sm-6.pb-2
+      button.btn.btn-secondary.btn-block
+        | No MOT Details Held
+  div(style="width: 100%").row.m-0.pt-2
+    each car in cars
+      div.col-sm-6.col-lg-3.pb-2
+        div(class=`${car.class}`).card.h-100
+          div.card-body.text-center
+            .row
+              .col-sm-12.pb-2
+                h1.card-title
+                  .reg-mark-sm
+                    | #{car.registrationNumber}
+                h6.card-subtitle
+                  | #{car.make} (#{car.year})
+            .row
+              .col-sm-6
+                h5.card-subtitle
+                  | MOT
+              .col-sm-6
+                h5.card-subtitle.mb-2
+                  | TAX
+            .row
+              .col-sm-6
+                - let motDue = new Date(car.motDue).toLocaleString().split(',')[0]
+                | #{motDue}
+              .col-sm-6
+                - let taxDue = new Date(car.taxDue).toLocaleString().split(',')[0]
+                | #{taxDue}
+            .row
+              .col-sm-6
+                | #{car.motDaysTo} days
+              .col-sm-6
+                | #{car.taxDaysTo} days
