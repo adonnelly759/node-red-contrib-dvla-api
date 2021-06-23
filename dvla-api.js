@@ -28,14 +28,14 @@ function hasNumber(myString) {
 }
 
 module.exports = function(RED) {
-    function DvlaApiNode(config) {
+    function DvlaApiControlNode(config) {
         RED.nodes.createNode(this,config);
         this.endpoint = RED.nodes.getNode(config.endpoint);
         var node = this;
         if(this.endpoint){
             node.on('input', function(msg) {
                 let KEY = this.endpoint.key
-                let REG = msg.payload.split(",").map(function(e) {return e.trim()})
+                let REG = this.endpoint.plates
                 Promise.all(REG.map(function(e){
                     return getDetails(e, KEY)
                 }))
@@ -61,12 +61,13 @@ module.exports = function(RED) {
             node.send(msg)
         }
     }
-    RED.nodes.registerType("dvla-api",DvlaApiNode);
+    RED.nodes.registerType("dvla-control",DvlaApiControlNode);
 
     function RemoteServerNode(n) {
         RED.nodes.createNode(this,n);
         this.name = n.name;
         this.key = n.key;
+        this.plates = n.plates;
     }
     RED.nodes.registerType("dvla-api-key-config",RemoteServerNode);
 }

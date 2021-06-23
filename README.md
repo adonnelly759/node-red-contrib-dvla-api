@@ -7,7 +7,9 @@
 
 This dvla-api node can be used to obtain vehicle information from regiration plates from United Kingdom, and Northern Ireland.
 
-The node allows to query either one registraion number or multiple registration numbers at one time by sepearting the plates by commas. eg. ```msg.payload = "PLATE,PLATE,PLATE"```
+You have the availability of built-in modules which can be used to peridocially trigger the ```dvla-control``` module.
+
+The node red module allows you to add a list of number plates, set up through the configuration node and queries each of these for you.
 
 The node also takes the users API Key to query the DVLA API via a configuration node.
 

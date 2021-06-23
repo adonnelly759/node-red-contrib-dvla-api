@@ -4,9 +4,49 @@
         defaults: {
             name: {value:"",required:true},
             key: {value:"",required:true},
+            plates: {value:[""], required:true}
         },
         label: function() {
             return this.name;
+        },
+        oneditprepare: function() {
+            $('#node-input-plates-container').css('min-height','150px').editableList({
+                addItem: function(row, index, data) {
+                    if(typeof data == "object"){
+                        $(row).html("<input type='text' class='node-input-plate-name' placeholder='Number Plate'>");
+                    } else {
+                        $(row).html("<input type='text' class='node-input-plate-name' placeholder='Number Plate' value='"+data+"'>");
+                    }
+                },
+                removable: true,
+                sortable: true
+            });
+
+            for (var i=0; i<this.plates.length; i++) {
+                var plate = this.plates[i];
+                $("#node-input-plates-container").editableList('addItem', plate);
+            }
+        },
+        oneditsave: function() {
+            let plates = $("#node-input-plates-container").editableList('items');
+            let node = this
+            node.plates = []
+            plates.each(function(i){
+                let plate = $(this)
+                let val = plate.find('.node-input-plate-name').val()
+                node.plates.push(val)
+            })
+        },
+        oneditresize: function(size) {
+            var rows = $("#dialog-form>div:not(.node-input-plate-container-row)");
+            var height = size.height;
+            for (var i=0; i<rows.length; i++) {
+                height -= $(rows[i]).outerHeight(true);
+            }
+            var editorRow = $("#dialog-form>div.node-input-plate-container-row");
+            height -= (parseInt(editorRow.css("marginTop"))+parseInt(editorRow.css("marginBottom")));
+            height += 16;
+            $("#node-input-plate-container").editableList('height',height);
         }
     });
 </script>
@@ -20,10 +60,16 @@
         <label for="node-config-input-key"><i class="fa fa-bookmark"></i> API Key</label>
         <input type="text" id="node-config-input-key">
     </div>
+        <div class="form-row" style="margin-bottom:0;">
+        <label><i class="fa fa-list"></i> Plates</span></label>
+    </div>
+    <div class="form-row node-input-plates-container-row">
+        <ol id="node-input-plates-container"></ol>
+    </div>
 </script>
 
 <script type="text/javascript">
-    RED.nodes.registerType('dvla-api',{
+    RED.nodes.registerType('dvla-control',{
         category: 'DVLA',
         color: '#a6bbcf',
         defaults: {
@@ -34,12 +80,12 @@
         outputs:1,
         icon: "file.png",
         label: function() {
-            return this.name||"dvla-api";
+            return this.name||"dvla-control";
         }
     });
 </script>
 
-<script type="text/html" data-template-name="dvla-api">
+<script type="text/html" data-template-name="dvla-control">
 	<div class="form-row">
 		<label for="node-input-endpoint"><i class="fa fa-bolt"></i> DVLA Config</span></label>
 		<input type="text" id="node-input-endpoint">
@@ -56,8 +102,9 @@
     <h2 id="install">Install</h2>
     <p><code>npm install node-red-contrib-dvla-api</code></p>
     <p>This dvla-api node can be used to obtain vehicle information from regiration plates from United Kingdom, and Northern Ireland.</p>
-    <p>The node allows to query either one registraion number or multiple registration numbers at one time by sepearting the plates by commas. eg. <code>msg.payload = &quot;PLATE,PLATE,PLATE&quot;</code></p>
-    <p>The node also takes the users API to query the DVLA API. eg <code>msg.key = &quot;xxx&quot;</code></p>
+    <p>You have the availability of built-in modules which can be used to peridocially trigger the <code>dvla-control</code> module.</p>
+    <p>The node red module allows you to add a list of number plates, set up through the configuration node and queries each of these for you.</p>
+    <p>The node also takes the users API Key to query the DVLA API via a configuration node.</p>
     <p>The output from the node module returns an array of JSON objects like the below example:</p>
     <pre><code>{
       <span class="hljs-attr">"artEndDate"</span>: <span class="hljs-string">"2025-02-28"</span>,
