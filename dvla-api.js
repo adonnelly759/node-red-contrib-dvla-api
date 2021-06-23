@@ -9,7 +9,7 @@ const getDetails = (registrationNumber, key) => {
         "Content-Type": "application/json",
         "x-api-key": key
       }
-    return axios.post(url, data, { headers}).then(response => this.res = response.data)
+    return axios.post(url, data, { headers}).then(response => this.res = response.data).catch(err => this.res = err)
 }
 
 function convertPlate(reg){
@@ -30,22 +30,43 @@ function hasNumber(myString) {
 module.exports = function(RED) {
     function DvlaApiNode(config) {
         RED.nodes.createNode(this,config);
+        this.endpoint = RED.nodes.getNode(config.endpoint);
         var node = this;
-        node.on('input', function(msg) {
-            let REG = msg.payload.split(",").map(function(e) {return e.trim()})
-            let KEY = msg.key
-            Promise.all(REG.map(function(e){
-                return getDetails(e, KEY)
-            }))
-            .then((values) => {
-                let cars = []
-                for(const value of values){
-                    cars.push(value)
-                }
-                msg.payload = cars
-                node.send(msg);
-            })
-        });
+        if(this.endpoint){
+            node.on('input', function(msg) {
+                let KEY = this.endpoint.key
+                let REG = msg.payload.split(",").map(function(e) {return e.trim()})
+                Promise.all(REG.map(function(e){
+                    return getDetails(e, KEY)
+                }))
+                .then((values) => {
+                    let cars = []
+                    for(const value of values){
+                        cars.push(value)
+                    }
+
+                    if(cars[0]["name"] === "Error"){
+                        let error = `${cars[0]["response"].status}: ${cars[0]["response"].statusText}`
+                        node.error(error)
+                        node.status({fill:"red",shape:"ring",text:error});
+                    } else {
+                        msg.payload = cars
+                        node.send(msg);
+                        node.status({fill:"green",shape:"dot",text:"200: Successful"});
+                    }
+                })
+            });
+        } else {
+            msg.error('No API Key configured.')
+            node.send(msg)
+        }
     }
     RED.nodes.registerType("dvla-api",DvlaApiNode);
+
+    function RemoteServerNode(n) {
+        RED.nodes.createNode(this,n);
+        this.name = n.name;
+        this.key = n.key;
+    }
+    RED.nodes.registerType("dvla-api-key-config",RemoteServerNode);
 }

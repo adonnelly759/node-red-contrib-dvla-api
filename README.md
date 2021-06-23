@@ -9,7 +9,7 @@ This dvla-api node can be used to obtain vehicle information from regiration pla
 
 The node allows to query either one registraion number or multiple registration numbers at one time by sepearting the plates by commas. eg. ```msg.payload = "PLATE,PLATE,PLATE"```
 
-The node also takes the users API to query the DVLA API. eg ```msg.key = "xxx"```
+The node also takes the users API Key to query the DVLA API via a configuration node.
 
 The output from the node module returns an array of JSON objects like the below example:
 ```
