@@ -18,7 +18,6 @@ The node also takes the users API Key to query the DVLA API via a configuration 
 
 Dashboard Node - Generates a dashboard with your preset regirstrations and allows you to setup a route and a port. Error handling is poor on this at the moment so if it fails then select a new port and restart NodeRed
 
-
 The output from the node module returns an array of JSON objects like the below example:
 ```
 {
