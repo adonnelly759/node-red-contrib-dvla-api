@@ -2,6 +2,9 @@
 
 ![npm](https://img.shields.io/npm/dt/node-red-contrib-dvla-api?label=Downloads&logo=NPM&style=flat-square) ![npm](https://img.shields.io/npm/v/node-red-contrib-dvla-api?label=Version&logo=NPM&style=flat-square) ![NPM](https://img.shields.io/npm/l/node-red-contrib-dvla-api?style=flat-square) ![GitHub issues](https://img.shields.io/github/issues/adonnelly759/node-red-contrib-dvla-api?style=flat-square)
 
+### Support my developments
+[!["Buy Me A Beer"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/aidandon)
+
 ## Install
 ``` npm install node-red-contrib-dvla-api```
 
